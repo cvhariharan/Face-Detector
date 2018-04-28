@@ -32,20 +32,22 @@ for each_img in all_img_names:
         break
 #Delete the first column of zeros
 pixel_matrix = np.delete(pixel_matrix,0,1)
-total_img_pixels = total_img_pixels / num_imgs
+total_img_pixels = total_img_pixels / training_size
+print(total_img_pixels)
 temp = np.reshape(total_img_pixels,(height,width))
 im = Image.fromarray(temp)
 im.show()
-print(pixel_matrix.shape)
+#print(pixel_matrix)
+#print("T")
 error_matrix = pixel_matrix - total_img_pixels
 #print(error_matrix)
-L = np.matmul(pixel_matrix.T,pixel_matrix)
+L = np.matmul(error_matrix.T,error_matrix)
 L = L/training_size
 print(L.shape)
 
 #Calculate eigenvalues and eigenvectors
 eigenvalues, eigenvectors = LA.eig(L)
-#print(eigenvectors)
+print(eigenvectors)
 
-eigenfaces = np.matmul(pixel_matrix,eigenvectors)
+eigenfaces = np.matmul(error_matrix,eigenvectors)
 #print(eigenfaces)
